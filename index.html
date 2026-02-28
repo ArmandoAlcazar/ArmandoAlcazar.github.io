@@ -256,8 +256,11 @@ section{padding:7rem 5rem;}
 .j-pnas{background:rgba(149,196,168,.12);border:1px solid rgba(149,196,168,.3);color:var(--sage);}
 .j-acs{background:rgba(184,115,51,.12);border:1px solid rgba(184,115,51,.3);color:#d49060;}
 .j-other{background:rgba(210,232,218,.06);border:1px solid rgba(210,232,218,.15);color:rgba(210,232,218,.7);}
-.pub-content h4{font-size:.94rem;font-weight:400;color:var(--dawn);line-height:1.55;margin-bottom:.3rem;}
+.pub-badge-placeholder{display:none;}
 .pub-meta{font-size:.78rem;color:var(--fern);font-style:italic;}
+.pub-link{text-decoration:none;display:block;}
+.pub-link h4{font-size:.94rem;font-weight:400;color:var(--dawn);line-height:1.55;margin-bottom:.3rem;transition:color .2s;}
+.pub-link:hover h4{color:var(--gold);text-decoration:underline;text-underline-offset:3px;}
 
 /* ── TIMELINE ── */
 #journey{background:white;}
@@ -494,23 +497,29 @@ footer p{font-size:.78rem;color:rgba(255,255,255,.35);}
       <div class="pub-num">01</div>
       <div class="pub-content">
         <div><span class="pub-journal j-nature">Nature Microbiology</span></div>
-        <h4>Glutathione-mediated redox regulation in <em>Cryptococcus neoformans</em> impacts virulence</h4>
-        <div class="pub-meta">Black B., Buffoni Roque da Silva L., Hu G., Qu X., Smith D.F.Q., <strong>Alcázar Magaña A.</strong>, Foster L.J., Kronstad J.W. et al. — Nature Microbiology (2024)</div>
+        <a class="pub-link" href="https://www.nature.com/articles/s41564-024-01721-x" target="_blank">
+          <h4>Glutathione-mediated redox regulation in <em>Cryptococcus neoformans</em> impacts virulence</h4>
+        </a>
+        <div class="pub-meta">Black B., Buffoni Roque da Silva L., Hu G., Qu X., Smith D.F.Q., <strong>Alcázar Magaña A.</strong>, Foster L.J., Kronstad J.W. et al. — Nature Microbiology 9, 2084–2098 (2024)</div>
       </div>
     </li>
     <li class="pub-item">
       <div class="pub-num">02</div>
       <div class="pub-content">
         <div><span class="pub-journal j-pnas">PNAS</span></div>
-        <h4>Elevated virus infection of honey bee queens reduces methyl oleate production and destabilizes colony-level social structure</h4>
-        <div class="pub-meta">McAfee A., Chapman A., <strong>Alcazar Magaña A.</strong>, Marshall K.E., Hoover S.E., Tarpy D.R., Foster L.J. — Proc. Natl. Acad. Sci. (2025)</div>
+        <a class="pub-link" href="https://www.pnas.org/doi/10.1073/pnas.2518975122" target="_blank">
+          <h4>Elevated virus infection of honey bee queens reduces methyl oleate production and destabilizes colony-level social structure</h4>
+        </a>
+        <div class="pub-meta">McAfee A., Chapman A., <strong>Alcázar Magaña A.</strong>, Marshall K.E., Hoover S.E., Tarpy D.R., Foster L.J. — PNAS 122(42), e2518975122 (2025)</div>
       </div>
     </li>
     <li class="pub-item">
       <div class="pub-num">03</div>
       <div class="pub-content">
         <div><span class="pub-journal j-acs">Journal of Proteome Research</span></div>
-        <h4>Comparative LC-HRMS/MS Lipidomics Analysis of Macaque Heart Tissue Flash-Frozen or Embedded in Optimal Cutting Temperature Polymer (OCT): Practical Considerations</h4>
+        <a class="pub-link" href="https://scholar.google.ca/citations?user=2kN0GqYAAAAJ&hl=en" target="_blank">
+          <h4>Comparative LC-HRMS/MS Lipidomics Analysis of Macaque Heart Tissue Flash-Frozen or Embedded in Optimal Cutting Temperature Polymer (OCT): Practical Considerations</h4>
+        </a>
         <div class="pub-meta"><strong>Alcázar Magaña A.</strong> et al. — Journal of Proteome Research</div>
       </div>
     </li>
@@ -518,31 +527,39 @@ footer p{font-size:.78rem;color:rgba(255,255,255,.35);}
       <div class="pub-num">04</div>
       <div class="pub-content">
         <div><span class="pub-journal j-acs">Analytical Chemistry</span></div>
-        <h4>Accelerating Metabolite Identification in Natural Product Research: Toward an Ideal Combination of LC-HRMS/MS and NMR Profiling, In Silico Databases, and Chemometrics</h4>
-        <div class="pub-meta">Houriet J., Manwill P.K., <strong>Alcázar Magaña A.</strong> et al. — Analytical Chemistry (2019)</div>
+        <a class="pub-link" href="https://pubs.acs.org/doi/10.1021/acs.analchem.8b05112" target="_blank">
+          <h4>Accelerating Metabolite Identification in Natural Product Research: Toward an Ideal Combination of LC-HRMS/MS and NMR Profiling, In Silico Databases, and Chemometrics</h4>
+        </a>
+        <div class="pub-meta">Houriet J., Manwill P.K., <strong>Alcázar Magaña A.</strong> et al. — Analytical Chemistry 91(1), 704–742 (2019)</div>
       </div>
     </li>
     <li class="pub-item">
       <div class="pub-num">05</div>
       <div class="pub-content">
-        <div><span class="pub-journal j-other">Redox Biology / Free Radical Biology</span></div>
-        <h4>Xanthohumol ameliorates diet-induced liver dysfunction via Farnesoid X Receptor-dependent and independent signaling</h4>
+        <div><span class="pub-journal j-other">Redox Biology</span></div>
+        <a class="pub-link" href="https://scholar.google.ca/citations?user=2kN0GqYAAAAJ&hl=en" target="_blank">
+          <h4>Xanthohumol ameliorates diet-induced liver dysfunction via Farnesoid X Receptor-dependent and independent signaling</h4>
+        </a>
         <div class="pub-meta"><strong>Alcázar Magaña A.</strong> et al. — Linus Pauling Institute, Oregon State University</div>
       </div>
     </li>
     <li class="pub-item">
       <div class="pub-num">06</div>
       <div class="pub-content">
-        <div><span class="pub-journal j-other">Metabolomics / Frontiers</span></div>
-        <h4>Evaluation of lipidomic profiles of heart tissue in assessing the prognosis of patients undergoing advanced heart failure therapies</h4>
-        <div class="pub-meta"><strong>Alcázar Magaña A.</strong> et al. — Cardiovascular lipidomics study, UBC</div>
+        <div><span class="pub-journal j-other">Frontiers in Cardiovascular Medicine</span></div>
+        <a class="pub-link" href="https://scholar.google.ca/citations?user=2kN0GqYAAAAJ&hl=en" target="_blank">
+          <h4>Evaluation of lipidomic profiles of heart tissue in assessing the prognosis of patients undergoing advanced heart failure therapies</h4>
+        </a>
+        <div class="pub-meta"><strong>Alcázar Magaña A.</strong> et al. — Cardiovascular lipidomics, UBC</div>
       </div>
     </li>
     <li class="pub-item">
       <div class="pub-num">07</div>
       <div class="pub-content">
-        <div><span class="pub-journal j-other">Phytochemistry / Natural Products</span></div>
-        <h4>Phytochemical characterization of Tabernanthe iboga root bark and its effects on dysfunctional metabolism and cognitive performance in high-fat-fed C57BL/6J mice</h4>
+        <div><span class="pub-journal j-other">Phytochemistry</span></div>
+        <a class="pub-link" href="https://scholar.google.ca/citations?user=2kN0GqYAAAAJ&hl=en" target="_blank">
+          <h4>Phytochemical characterization of Tabernanthe iboga root bark and its effects on dysfunctional metabolism and cognitive performance in high-fat-fed C57BL/6J mice</h4>
+        </a>
         <div class="pub-meta"><strong>Alcázar Magaña A.</strong> et al. — OSU / UBC Collaboration</div>
       </div>
     </li>
@@ -550,8 +567,10 @@ footer p{font-size:.78rem;color:rgba(255,255,255,.35);}
       <div class="pub-num">08</div>
       <div class="pub-content">
         <div><span class="pub-journal j-other">Antioxidants (MDPI)</span></div>
-        <h4>Vitamin C activates the folate-mediated one-carbon cycle in C2C12 myoblasts</h4>
-        <div class="pub-meta"><strong>Alcázar Magaña A.</strong> et al. — Antioxidants 9, 217 (2020)</div>
+        <a class="pub-link" href="https://doi.org/10.3390/antiox9030217" target="_blank">
+          <h4>Vitamin C activates the folate-mediated one-carbon cycle in C2C12 myoblasts</h4>
+        </a>
+        <div class="pub-meta"><strong>Alcázar Magaña A.</strong>, Reed R.L., Koluda R., Miranda C.L., Maier C.S., Stevens J.F. — Antioxidants 9(3), 217 (2020)</div>
       </div>
     </li>
   </ul>
