@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery · Dr. Armando Alcázar Magaña</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pine: #1c3528;
+  --forest: #2a4d3a;
+  --moss: #3d6b50;
+  --fern: #6a9e7a;
+  --sage: #95c4a8;
+  --mist: #d2e8da;
+  --dawn: #f7f3ed;
+  --stone: #e8e2d8;
+  --copper: #b87333;
+  --gold: #d4a853;
+  --amber: #e8c47a;
+  --ink: #1a1a18;
+  --text: #2c2c2a;
+  --mid: #5a5a55;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--ink);
+  color: var(--dawn);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 1rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(26,26,24,.88); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(210,232,218,.07);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 600; color: var(--dawn);
+  text-decoration: none; letter-spacing: .02em;
+}
+.nav-logo span { color: var(--copper); }
+.nav-back {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .78rem; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--sage);
+  text-decoration: none; transition: color .2s;
+}
+.nav-back:hover { color: var(--gold); }
+.nav-back svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* ── HERO HEADER ── */
+.gallery-header {
+  padding: 10rem 5rem 4rem;
+  position: relative; overflow: hidden;
+}
+.gallery-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 100% at 50% 100%, rgba(42,77,58,.3) 0%, transparent 65%);
+}
+.header-tag {
+  font-size: .7rem; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--amber); margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp .7s ease .1s forwards;
+}
+.header-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 700;
+  color: var(--dawn); line-height: 1; margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp .7s ease .2s forwards;
+}
+.header-title em { font-style: italic; color: var(--sage); }
+.header-sub {
+  font-size: .95rem; color: rgba(210,232,218,.6); font-weight: 300;
+  max-width: 500px; line-height: 1.7;
+  opacity: 0; animation: fadeUp .7s ease .35s forwards;
+}
+
+/* ── FILTER TABS ── */
+.filter-bar {
+  padding: 0 5rem 3rem;
+  display: flex; gap: .8rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .7s ease .5s forwards;
+}
+.filter-btn {
+  padding: .5rem 1.4rem;
+  background: transparent;
+  border: 1px solid rgba(210,232,218,.15);
+  color: rgba(210,232,218,.5);
+  font-family: 'Outfit', sans-serif;
+  font-size: .75rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; cursor: pointer;
+  transition: all .25s; border-radius: 0;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--forest);
+  border-color: var(--fern);
+  color: var(--mist);
+}
+.filter-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--pine);
+}
+
+/* ── MASONRY GRID ── */
+.gallery-grid {
+  padding: 0 5rem 8rem;
+  columns: 3;
+  column-gap: 1.2rem;
+}
+
+.photo-card {
+  break-inside: avoid;
+  margin-bottom: 1.2rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: #111;
+  display: block;
+}
+
+.photo-card img {
+  width: 100%;
+  display: block;
+  transition: transform .5s ease, filter .4s ease;
+  filter: brightness(.92) saturate(1.05);
+}
+
+.photo-card:hover img {
+  transform: scale(1.04);
+  filter: brightness(1) saturate(1.1);
+}
+
+.photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,53,40,.9) 0%, transparent 50%);
+  opacity: 0; transition: opacity .35s ease;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.photo-card:hover .photo-overlay { opacity: 1; }
+
+.photo-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-style: italic;
+  color: var(--dawn); margin-bottom: .3rem;
+  transform: translateY(8px); transition: transform .35s ease;
+}
+.photo-card:hover .photo-caption { transform: translateY(0); }
+
+.photo-loc {
+  font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--amber);
+  transform: translateY(8px); transition: transform .35s ease .05s;
+}
+.photo-card:hover .photo-loc { transform: translateY(0); }
+
+/* Category tag on card */
+.photo-tag {
+  position: absolute; top: 1rem; left: 1rem;
+  padding: .25rem .8rem;
+  background: rgba(26,26,24,.7); backdrop-filter: blur(6px);
+  border: 1px solid rgba(210,232,218,.15);
+  font-size: .65rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--amber);
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,12,10,.95); backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+
+.lb-img-wrap {
+  position: relative; max-width: 85vw; max-height: 85vh;
+}
+.lb-img-wrap img {
+  max-width: 85vw; max-height: 82vh;
+  object-fit: contain; display: block;
+  box-shadow: 0 40px 100px rgba(0,0,0,.7);
+}
+.lb-caption {
+  text-align: center; padding: 1rem 0 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-style: italic; color: var(--mist);
+}
+.lb-loc { font-size: .75rem; color: var(--amber); letter-spacing: .1em; text-transform: uppercase; }
+
+.lb-close {
+  position: fixed; top: 2rem; right: 2.5rem;
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: var(--dawn); font-size: 1.3rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; z-index: 501;
+}
+.lb-close:hover { background: rgba(255,255,255,.15); }
+
+.lb-prev, .lb-next {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  width: 50px; height: 50px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  color: var(--dawn); font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; z-index: 501;
+}
+.lb-prev { left: 1.5rem; }
+.lb-next { right: 1.5rem; }
+.lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,.15); border-color: var(--gold); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 6rem 2rem; display: none;
+}
+.empty-state.show { display: block; }
+.empty-state h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; color: var(--sage); margin-bottom: 1rem;
+}
+.empty-state p { font-size: .9rem; color: var(--mid); }
+
+/* ── HOW TO ADD PHOTOS BANNER ── */
+.how-to {
+  margin: 0 5rem 3rem;
+  padding: 1.8rem 2.5rem;
+  background: rgba(42,77,58,.2);
+  border: 1px solid rgba(106,158,122,.2);
+  border-left: 3px solid var(--fern);
+  display: flex; align-items: flex-start; gap: 1.5rem;
+}
+.how-to-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: .1rem; }
+.how-to h4 {
+  font-size: .85rem; font-weight: 600; color: var(--sage);
+  letter-spacing: .05em; margin-bottom: .4rem;
+}
+.how-to p { font-size: .82rem; line-height: 1.7; color: rgba(210,232,218,.6); }
+.how-to code {
+  background: rgba(255,255,255,.07); padding: .1rem .4rem;
+  font-size: .8rem; color: var(--amber); border-radius: 2px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: rgba(0,0,0,.4);
+  border-top: 1px solid rgba(210,232,218,.06);
+  padding: 2rem 5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p { font-size: .78rem; color: rgba(255,255,255,.25); }
+.f-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; color: rgba(255,255,255,.4);
+  text-decoration: none;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .gallery-grid { columns: 2; padding: 0 1.5rem 5rem; }
+  .gallery-header, .filter-bar, .how-to { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .how-to { margin: 0 1.5rem 2rem; }
+  nav { padding: 1rem 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; gap: .8rem; text-align: center; }
+}
+@media (max-width: 560px) {
+  .gallery-grid { columns: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Dr. <span>Alcázar Magaña</span></a>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<!-- HEADER -->
+<div class="gallery-header">
+  <div class="header-tag">Nature · Science · Life</div>
+  <h1 class="header-title">My <em>Gallery</em></h1>
+  <p class="header-sub">Moments from the field, the forest, the lab, and everywhere in between. The world outside the laboratory is just as wondrous as the one within.</p>
+</div>
+
+<!-- HOW TO ADD PHOTOS -->
+<div class="how-to">
+  <div class="how-to-icon">📸</div>
+  <div>
+    <h4>How to add your photos</h4>
+    <p>
+      Upload your images to a folder called <code>images/</code> in your GitHub repo, then edit this file to add them. Each photo just needs one line like:<br>
+      <code>{ src: "images/yourphoto.jpg", caption: "My caption", location: "Vancouver, BC", category: "nature" }</code><br>
+      Categories can be: <code>nature</code>, <code>science</code>, <code>travel</code>, or <code>life</code>.
+      <a href="#photo-data" style="color:var(--amber);margin-left:.5rem;">→ Jump to the photo list in the code</a>
+    </p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All Photos</button>
+  <button class="filter-btn" data-filter="nature">🌲 Nature</button>
+  <button class="filter-btn" data-filter="science">🔬 Science</button>
+  <button class="filter-btn" data-filter="travel">✈️ Travel</button>
+  <button class="filter-btn" data-filter="life">😊 Life</button>
+</div>
+
+<!-- GALLERY GRID -->
+<div class="gallery-grid" id="galleryGrid"></div>
+<div class="empty-state" id="emptyState">
+  <h3>No photos yet in this category</h3>
+  <p>Add some images to your GitHub repo and update the photo list below!</p>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <button class="lb-prev" id="lbPrev">‹</button>
+  <button class="lb-next" id="lbNext">›</button>
+  <div class="lb-img-wrap">
+    <img id="lbImg" src="" alt="">
+    <div class="lb-caption" id="lbCaption"></div>
+    <div class="lb-loc" id="lbLoc"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="f-logo">Dr. Armando Alcázar Magaña</a>
+  <p>© 2026 · Life Sciences Centre, UBC · Vancouver, Canada</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════
+//  📸 YOUR PHOTO LIST — ADD YOUR PHOTOS HERE
+//  id="photo-data"
+//
+//  Instructions:
+//  1. Upload images to an "images/" folder in GitHub
+//  2. Add an entry below for each photo like this:
+//     { src: "images/mytrip.jpg", caption: "My Trip", location: "Banff, AB", category: "nature" }
+//
+//  Categories: "nature" | "science" | "travel" | "life"
+// ══════════════════════════════════════════════════
+const photos = [
+
+  // ═══════════════════════════════════════════════════════════
+  //  👇 ADD YOUR PHOTOS HERE — one line per photo
+  //
+  //  { src: "images/YOURFILE.jpg", caption: "My caption", location: "Place", category: "nature" },
+  //
+  //  Categories: "nature" | "science" | "travel" | "life"
+  // ═══════════════════════════════════════════════════════════
+
+];
+// ══════════════════════════════════════════════════
+
+let currentFilter = 'all';
+let currentIndex = 0;
+let filteredPhotos = [];
+
+function getFiltered(filter) {
+  return filter === 'all' ? photos : photos.filter(p => p.category === filter);
+}
+
+function buildGrid(filter) {
+  filteredPhotos = getFiltered(filter);
+  const grid = document.getElementById('galleryGrid');
+  const empty = document.getElementById('emptyState');
+  grid.innerHTML = '';
+
+  if (filteredPhotos.length === 0) {
+    empty.classList.add('show');
+    return;
+  }
+  empty.classList.remove('show');
+
+  filteredPhotos.forEach((photo, i) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.innerHTML = `
+      <img src="${photo.src}" alt="${photo.caption}" loading="lazy">
+      <div class="photo-tag">${photo.category}</div>
+      <div class="photo-overlay">
+        <div class="photo-caption">${photo.caption}</div>
+        <div class="photo-loc">📍 ${photo.location}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => openLightbox(i));
+    grid.appendChild(card);
+  });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    buildGrid(currentFilter);
+  });
+});
+
+// Lightbox
+function openLightbox(index) {
+  currentIndex = index;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function updateLightbox() {
+  const p = filteredPhotos[currentIndex];
+  document.getElementById('lbImg').src = p.src;
+  document.getElementById('lbCaption').textContent = p.caption;
+  document.getElementById('lbLoc').textContent = '📍 ' + p.location;
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+  updateLightbox();
+});
+document.getElementById('lbNext').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % filteredPhotos.length;
+  updateLightbox();
+});
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + filteredPhotos.length) % filteredPhotos.length; updateLightbox(); }
+  if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % filteredPhotos.length; updateLightbox(); }
+});
+
+// Init
+buildGrid('all');
+</script>
+</body>
+</html>
